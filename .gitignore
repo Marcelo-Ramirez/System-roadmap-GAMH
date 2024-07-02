@@ -1,0 +1,33 @@
+#Todos los archivos que no son necesarios encontrados en la carpeta "client" serán ignorados por git
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+client/node_modules
+client/.pnp
+client/.pnp.js
+
+# testing
+client/coverage
+
+# production
+client/build
+
+# misc
+client/.DS_Store
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
+
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+
+# templates de app que esta siendo construido con react
+app/templates
+
+# venv
+app/venv
+
+#cache de python
+app/models/__pycache__

@@ -1,0 +1,14 @@
+/* Login.css */
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+}
+
+.login-logo {
+    height: 80px; /* Ajusta el tamaño según tus necesidades */
+}
