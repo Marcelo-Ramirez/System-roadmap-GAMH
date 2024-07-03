@@ -8,7 +8,8 @@ const queryLogin = async (username, password) => {
     });
 
     if (!response.ok) {
-        throw new Error('Login failed');
+        let messageJson = await response.json();
+        throw new Error(messageJson.message);
     }
 
     return await response.json();
