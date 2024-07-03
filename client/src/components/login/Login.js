@@ -11,14 +11,18 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const response = isRegistering 
-            ? await queryRegister(username, password) 
-            : await queryLogin(username, password);
+        try {
+            const response = isRegistering 
+                ? await queryRegister(username, password) 
+                : await queryLogin(username, password);
 
-        if (response.success) {
-            alert(isRegistering ? 'Registro exitoso' : 'Login exitoso');
-        } else {
-            alert('Error: ' + response.message);
+            if (response.message) {
+                alert(response.message);
+            } else if (response.token) {
+                alert('Login exitoso');
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);   
         }
     };
 
@@ -63,7 +67,7 @@ const Login = () => {
                 <button
                     className="w-full mt-4 text-blue-500"
                     onClick={() => setIsRegistering(!isRegistering)}
-                >
+                > 
                     {isRegistering ? 'Already have an account? Login' : 'Don\'t have an account? Register'}
                 </button>
             </div>
