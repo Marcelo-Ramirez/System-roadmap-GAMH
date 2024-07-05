@@ -1,6 +1,4 @@
-# auth.py
-
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify, current_app, redirect, url_for
 from models.users import User
 from models.database import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -37,6 +35,6 @@ def login():
     token = jwt.encode({
         'user_id': user.id, 
         'exp': datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)
-    }, current_app.config['SECRET_KEY'])  # Usar current_app para acceder a la configuración
+    }, current_app.config['SECRET_KEY'], algorithm="HS256")  # Usar current_app para acceder a la configuración
 
     return jsonify({'token': token})

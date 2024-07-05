@@ -31,3 +31,5 @@ app/venv
 
 #cache de python
 app/models/__pycache__
+app/routes/__pycache__
+app/__pycache__

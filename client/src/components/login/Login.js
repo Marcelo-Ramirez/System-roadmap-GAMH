@@ -1,27 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../AuthContext';
 import './Login.css';
-import background from './background.jpg'; // Importar la imagen
+import background from './background.jpg';
 import { queryLogin, queryRegister } from './api';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isRegistering, setIsRegistering] = useState(false);
+    const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log('Form submitted:', { username, password, isRegistering });
 
         try {
             const response = isRegistering 
                 ? await queryRegister(username, password) 
                 : await queryLogin(username, password);
 
+            console.log('API response:', response);
+
             if (response.message) {
                 alert(response.message);
             } else if (response.token) {
+                document.cookie = `token=${response.token}; path=/`; // Guardar el token en una cookie
+                login(response.token);
                 alert('Login exitoso');
+                navigate('/home');
             }
         } catch (error) {
+            console.error('Error:', error);
             alert('Error: ' + error.message);   
         }
     };
@@ -29,7 +40,7 @@ const Login = () => {
     return (
         <div
             className="login-container min-h-screen flex items-center justify-center bg-cover bg-center"
-            style={{ backgroundImage: `url(${background})` }} // Usar la imagen importada
+            style={{ backgroundImage: `url(${background})` }}
         >
             <div className="bg-white p-8 rounded shadow-md w-full max-w-md text-center">
                 <div className="logo-container flex justify-center items-center mb-6">
