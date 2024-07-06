@@ -1,5 +1,5 @@
 import logging
-from flask import Flask, send_from_directory, request, redirect, url_for
+from flask import Flask, send_from_directory, request, redirect, url_for, jsonify
 import socket
 from models.database import init_db
 from routes.auth import auth_bp
@@ -30,7 +30,7 @@ app.register_blueprint(main_bp)
 def require_authentication():
     logging.debug(f"Ruta solicitada: {request.path}")
     
-    if request.path not in ['/', '/index', '/login', '/register'] and 'static' not in request.path:
+    if request.path not in ['/', '/index', '/login', '/register', '/logout'] and 'static' not in request.path:
         token = request.cookies.get('token') or request.headers.get('x-access-token')
         if not token:
             logging.debug("No se encontró el token, redirigiendo a /")
@@ -50,12 +50,37 @@ def serve_index():
     logging.debug("Sirviendo index.html")
     return send_from_directory('templates', 'index.html')
 
+@app.route('/login')
+def login():
+    token = request.cookies.get('token') or request.headers.get('x-access-token')
+    if token:
+        try:
+            jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+            return redirect(url_for('serve_home'))
+        except jwt.ExpiredSignatureError:
+            pass
+        except jwt.InvalidTokenError:
+            pass
+    logging.debug("Sirviendo index.html para /login")
+    return send_from_directory('templates', 'index.html')
+
+@app.route('/logout')
+def logout():
+    resp = redirect(url_for('serve_index'))
+    resp.set_cookie('token', '', expires=0)
+    return resp
+
+@app.route('/home')
+def serve_home():
+    logging.debug("Sirviendo index.html para /home")
+    return send_from_directory('templates', 'index.html')
+
 # Ruta para manejar todas las rutas desconocidas y servir el archivo index.html
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
     logging.debug(f"Catch all route: {path}")
-    # Si la ruta solicitada no está vacía y el archivo existe en la carpeta estática, servir el archivo estático
+    # Verificar si la ruta solicitada es un archivo estático
     if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
         logging.debug(f"Sirviendo archivo estático: {path}")
         return send_from_directory(app.static_folder, path)

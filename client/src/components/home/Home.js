@@ -1,12 +1,28 @@
-// components/home/Home.js
-import React from 'react';
+import React, { useContext } from 'react';
+import Sidebar from './Sidebar';
+import Header from './Header';
+import TaskList from './TaskList';
+import { AuthContext } from '../../context/AuthContext';
 
 const Home = () => {
-    const username = localStorage.getItem('username'); // Obtener el nombre de usuario de localStorage
+    const { logout } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        logout();
+    };
 
     return (
-        <div>
-            <h1>Bienvenido a la página de inicio, {username}</h1>
+        <div className="flex">
+            <Sidebar />
+            <div className="flex-1">
+                <Header />
+                <div className="p-4 flex justify-between items-center">
+                    <TaskList />
+                    <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded">
+                        Logout
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };

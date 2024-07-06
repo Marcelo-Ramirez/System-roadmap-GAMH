@@ -1,4 +1,3 @@
-// AuthContext.js
 import React, { createContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
@@ -7,8 +6,6 @@ const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem('token'));
 
     useEffect(() => {
-        console.log('Token changed:', token);
-        // Almacenar el token en localStorage cuando cambia
         if (token) {
             localStorage.setItem('token', token);
         } else {
@@ -17,13 +14,12 @@ const AuthProvider = ({ children }) => {
     }, [token]);
 
     const login = (newToken) => {
-        console.log('Login called with token:', newToken);
         setToken(newToken);
     };
 
     const logout = () => {
-        console.log('Logout called');
         setToken(null);
+        window.location.href = '/login'; // Redirigir a la página de login
     };
 
     return (

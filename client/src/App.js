@@ -1,26 +1,28 @@
-// App.js
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './AuthContext';
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, AuthContext } from './context/AuthContext';
 import PrivateRoute from './PrivateRoute';
 import Login from './components/login/Login';
 import Home from './components/home/Home';
 
-function App() {
-    console.log('App component rendered');
-
+const App = () => {
     return (
         <AuthProvider>
             <Router>
                 <Routes>
-                    <Route path="/" element={<Login />} />
+                    <Route path="/" element={<Navigate to="/home" />} />
+                    <Route path="/login" element={<LoginWrapper />} />
                     <Route path="/home" element={<PrivateRoute element={<Home />} />} />
-                    {/* Ruta para manejar todas las rutas desconocidas */}
-                    <Route path="*" element={<Login />} />
+                    <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </Router>
         </AuthProvider>
     );
 }
+
+const LoginWrapper = () => {
+    const { token } = useContext(AuthContext);
+    return token ? <Navigate to="/home" /> : <Login />;
+};
 
 export default App;
