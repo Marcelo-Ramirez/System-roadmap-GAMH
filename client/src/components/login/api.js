@@ -15,13 +15,13 @@ const queryLogin = async (username, password) => {
     return await response.json();
 };
 
-const queryRegister = async (username, password) => {
+const queryRegister = async (username, password, area) => {
     const response = await fetch(`${window.origin}/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, area }),
     });
 
     if (!response.ok) {

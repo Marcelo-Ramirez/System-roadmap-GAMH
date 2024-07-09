@@ -8,20 +8,37 @@ import { queryLogin, queryRegister } from './api';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [area, setArea] = useState('');
     const [isRegistering, setIsRegistering] = useState(false);
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
 
+    const areas = [
+        "MAE",
+        "STRIO. MUNICIPAL",
+        "D.A.F.",
+        "D.I.U.D.",
+        "U. ACTIVOS FIJOS",
+        "A. SALUD Y EDUC.",
+        "LEGAL",
+        "CONTADOR Y TESORERO",
+        "RES. DNA Y SLIM",
+        "UNI. DE CONTRATACION",
+        "UNI. DE AGUA Y AGROP.",
+        "COR. DESPACHO",
+        "ASIS. ADMI."
+    ];
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Form submitted:', { username, password, isRegistering });
+        console.log('Formulario enviado:', { username, password, area, isRegistering });
 
         try {
             const response = isRegistering 
-                ? await queryRegister(username, password) 
+                ? await queryRegister(username, password, area) 
                 : await queryLogin(username, password);
 
-            console.log('API response:', response);
+            console.log('Respuesta de la API:', response);
 
             if (response.message) {
                 alert(response.message);
@@ -68,18 +85,35 @@ const Login = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
+                    {isRegistering && (
+                        <div className="mb-4 text-left">
+                            <label className="block text-gray-700">Área</label>
+                            <select
+                                className="w-full p-2 border border-gray-300 rounded mt-1"
+                                value={area}
+                                onChange={(e) => setArea(e.target.value)}
+                            >
+                                <option value="">Selecciona un área</option>
+                                {areas.map((area, index) => (
+                                    <option key={index} value={area}>
+                                        {area}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
                     <button
                         type="submit"
                         className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
                     >
-                        {isRegistering ? 'Register' : 'Login'}
+                        {isRegistering ? 'Registrar' : 'Login'}
                     </button>
                 </form>
                 <button
                     className="w-full mt-4 text-blue-500"
                     onClick={() => setIsRegistering(!isRegistering)}
                 > 
-                    {isRegistering ? 'Already have an account? Login' : 'Don\'t have an account? Register'}
+                    {isRegistering ? '¿Ya tienes una cuenta? Login' : '¿No tienes una cuenta? Regístrate'}
                 </button>
             </div>
         </div>
