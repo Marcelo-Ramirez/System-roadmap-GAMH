@@ -1,3 +1,4 @@
+# auth.py
 from flask import Blueprint, request, jsonify, current_app, redirect, url_for
 from models.users import User
 from models.database import db
@@ -10,27 +11,27 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
-    if not data or 'username' not in data or 'password' not in data:
-        return jsonify({'message': 'Invalid input'}), 400
+    if not data or 'username' not in data or 'password' not in data or 'area' not in data:
+        return jsonify({'message': 'Datos inválidos'}), 400
 
     hashed_password = generate_password_hash(data['password'], method='pbkdf2:sha256')
     
-    new_user = User(username=data['username'], password=hashed_password)
+    new_user = User(username=data['username'], password=hashed_password, area=data['area'])
     db.session.add(new_user)
     db.session.commit()
 
-    return jsonify({'message': 'New user registered!'})
+    return jsonify({'message': 'Nuevo usuario registrado'})
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
     if not data or not data.get('username') or not data.get('password'):
-        return jsonify({'message': 'Invalid input'}), 400
+        return jsonify({'message': 'Datos inválidos'}), 400
 
     user = User.query.filter_by(username=data['username']).first()
 
     if not user or not check_password_hash(user.password, data['password']):
-        return jsonify({'message': 'Login failed!'}), 401
+        return jsonify({'message': 'Inicio de sesión fallido'}), 401
 
     token = jwt.encode({
         'user_id': user.id, 

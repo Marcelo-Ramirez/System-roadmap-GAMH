@@ -1,11 +1,12 @@
 import logging
-from flask import Flask, send_from_directory, request, redirect, url_for, jsonify
-import socket
-from models.database import init_db
-from routes.auth import auth_bp
-from routes.main import main_bp  # Importar el blueprint main
 import os
+import socket
 import jwt
+from flask import Flask, send_from_directory, request, redirect, url_for, jsonify
+from models.database import init_db
+from models import User, UserProcess, Process, Folder, Document  # Importar todos los modelos
+from routes.auth import auth_bp
+from routes.main import main_bp
 
 # Configurar logging
 logging.basicConfig(level=logging.DEBUG)

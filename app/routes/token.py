@@ -1,3 +1,4 @@
+# token.py
 from functools import wraps
 from flask import request, redirect, url_for, current_app
 import jwt

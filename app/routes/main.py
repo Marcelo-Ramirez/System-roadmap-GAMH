@@ -1,3 +1,4 @@
+# main.py
 from flask import Blueprint, send_from_directory, current_app, request, redirect, url_for
 from routes.token import token_required  # Asegúrate de importar tu decorador correctamente
 import os

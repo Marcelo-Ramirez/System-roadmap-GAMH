@@ -21,10 +21,10 @@ for table_name in tables:
 
 # Obtener y mostrar los usuarios en la tabla 'users'
 print("Usuarios en la tabla 'users':")
-cursor.execute("SELECT username, password FROM users;")
+cursor.execute("SELECT username, password, area FROM users;")
 users = cursor.fetchall()
 for user in users:
-    print(f"Usuario: {user[0]}, Contraseña: {user[1]}")
+    print(f"Usuario: {user[0]}, Contraseña: {user[1]}, Área: {user[2]}")
 
 # Cerrar la conexión
 conn.close()
