@@ -12,15 +12,18 @@ const Home = () => {
     };
 
     return (
-        <div className="flex">
+        <div className="flex h-screen overflow-hidden">
             <Sidebar />
-            <div className="flex-1">
-                <Header />
-                <div className="p-4 flex justify-between items-center">
-                    <TaskList />
-                    <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded">
-                        Logout
-                    </button>
+            <div className="flex flex-col flex-1">
+                <div className="flex-1 flex p-4 h-full">
+                    <div className="flex-1 mr-4 overflow-auto">
+                        <TaskList />
+                    </div>
+                    <div className="flex flex-col items-end">
+                        <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded">
+                            Logout
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
