@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* modificacion al scroll bar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: hsl(0, 0%, 100%); 
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #ededed; 
+    border-radius: 10px;
+    border: 3px solid #f0f0f0;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0; 
+}
