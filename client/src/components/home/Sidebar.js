@@ -24,8 +24,8 @@ const Sidebar = ({ setContent, notifications }) => {
                             Mensajes
                             {notifications.messages > 0 && <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs">{notifications.messages}</span>}
                         </li>
-                        <li className="p-4 hover:bg-gray-200 cursor-pointer flex justify-between border rounded-lg mb-2" onClick={() => setContent('Proyectos')}>
-                            Proyectos
+                        <li className="p-4 hover:bg-gray-200 cursor-pointer flex justify-between border rounded-lg mb-2" onClick={() => setContent('Process')}>
+                            Procesos
                             {notifications.projects > 0 && <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs">{notifications.projects}</span>}
                         </li>
                         <li className="p-4 hover:bg-gray-200 cursor-pointer flex justify-between border rounded-lg mb-2" onClick={() => setContent('Reportes')}>

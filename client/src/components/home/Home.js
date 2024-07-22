@@ -1,11 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Sidebar from './Sidebar';
-import Header from './Header';
 import TaskList from './TaskList';
-import { AuthContext } from '../../context/AuthContext';
+import Process from './Process';
 
 const Home = () => {
-    const { logout } = useContext(AuthContext);
     const [content, setContent] = useState('Mis tareas');
     const notifications = {
         tasks: 2, // Añadido para Mis tareas
@@ -15,18 +13,14 @@ const Home = () => {
         contacts: 1,
     };
 
-    const handleLogout = () => {
-        logout();
-    };
-
     const renderContent = () => {
         switch (content) {
             case 'Mis tareas':
                 return <TaskList />;
             case 'Mensajes':
                 return <div>Contenido de Mensajes</div>;
-            case 'Proyectos':
-                return <div>Contenido de Proyectos</div>;
+            case 'Process':
+                return <Process />
             case 'Reportes':
                 return <div>Contenido de Reportes</div>;
             case 'Contactos':
