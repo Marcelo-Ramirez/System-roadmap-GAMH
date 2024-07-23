@@ -37,3 +37,7 @@ app/__pycache__
 
 # Documents
 documents
+
+# Archivos de testeo python
+app/models/test.py
+app/models/test2.py

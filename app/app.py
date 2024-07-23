@@ -1,6 +1,5 @@
 import logging
 import os
-import socket
 import jwt
 from flask import Flask, send_from_directory, request, redirect, url_for, jsonify
 from models.database import init_db
@@ -91,7 +90,4 @@ def catch_all(path):
         return send_from_directory('templates', 'index.html')
 
 if __name__ == '__main__':
-    hostname = socket.gethostname()
-    local_ip = socket.gethostbyname(hostname)
-    logging.debug(f"Ejecutando en http://{local_ip}:5000")
     app.run(debug=True, host='0.0.0.0')
