@@ -2,6 +2,7 @@ import logging
 import os
 import jwt
 from flask import Flask, send_from_directory, request, redirect, url_for, jsonify
+from werkzeug.utils import secure_filename
 from models.database import init_db
 from models import User, UserProcess, Process, Folder, Document  # Importar todos los modelos
 from routes.auth import auth_bp
@@ -17,6 +18,8 @@ app = Flask(__name__, static_folder='templates/static')
 app.config['SECRET_KEY'] = 'your_secret_key'  # Clave secreta para JWT
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'  # URI de la base de datos
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Desactivar el seguimiento de modificaciones para mejorar el rendimiento
+app.config['UPLOAD_FOLDER'] = 'instance/uploads'  # Carpeta para almacenar los archivos subidos
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Tamaño máximo de archivo: 16MB
 
 # Inicializar la base de datos
 init_db(app)
@@ -74,6 +77,36 @@ def logout():
 def serve_home():
     logging.debug("Sirviendo index.html para /home")
     return send_from_directory('templates', 'index.html')
+
+# Ruta para manejar la subida de archivos
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'message': 'No file part'}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'message': 'No selected file'}), 400
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        
+        # Asegurarse de que el directorio de subidas existe
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+        logging.debug(f"Saving file to: {file_path}")
+
+        try:
+            file.save(file_path)
+            logging.debug(f"File saved successfully to: {file_path}")
+            return jsonify({'message': 'File uploaded successfully', 'file_path': file_path}), 200
+        except Exception as e:
+            logging.error(f"Error saving file: {e}")
+            return jsonify({'message': 'Error saving file'}), 500
+    else:
+        return jsonify({'message': 'File type not allowed'}), 400
+
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx', 'xlsx', 'png', 'jpg', 'jpeg', 'mp4'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Ruta para manejar todas las rutas desconocidas y servir el archivo index.html
 @app.route('/', defaults={'path': ''})
