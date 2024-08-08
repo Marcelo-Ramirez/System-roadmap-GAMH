@@ -44,3 +44,6 @@ app/models/test2.py
 
 # Documentos uploads
 app/instance/uploads
+
+# Visual studio code
+.vscode

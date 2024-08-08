@@ -142,7 +142,7 @@ const Process = () => {
                         {folderTypes.map((type) => (
                             <div
                                 key={type}
-                                className={`w-full py-2 px-4 text-center border rounded-lg cursor-pointer ${folderType === type ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'}`}
+                                className={`w-full py-2 px-4 text-center border rounded-lg cursor-pointer ${folderType === type ? 'bg-slate-500 text-white' : 'bg-white text-gray-700'}`}
                                 onClick={() => setFolderType(type)}
                             >
                                 {type}
@@ -152,7 +152,7 @@ const Process = () => {
                 </div>
                 <button
                     type="submit"
-                    className="w-full py-2 px-4 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-500 mt-4"
+                    className="w-full py-2 px-4 bg-teal-800 text-white font-bold rounded-lg hover:bg-teal-700 mt-4"
                 >
                     Start Process
                 </button>
