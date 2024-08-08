@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Worker, Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
+import Table from './Table';
 
 const Process = () => {
     const [file, setFile] = useState(null);
@@ -157,6 +158,7 @@ const Process = () => {
                 </button>
                 {message && <p className="mt-4 text-center text-red-500">{message}</p>}
             </form>
+            <Table />
         </div>
     );
 };
