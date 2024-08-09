@@ -14,6 +14,7 @@
    ```
 
 ## Aplicación
+0. Usar python 3.12 (recomendacion)
 
 1. En el directorio `./app`, crea un entorno virtual con:
    ```sh
