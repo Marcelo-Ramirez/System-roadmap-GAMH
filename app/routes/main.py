@@ -8,6 +8,7 @@ main_bp = Blueprint('main', __name__, static_folder='../templates')
 
 @main_bp.route('/')
 def index():
+    logging.debug("Accediendo a /")
     return send_from_directory(main_bp.static_folder, 'index.html')
 
 @main_bp.route('/home')
