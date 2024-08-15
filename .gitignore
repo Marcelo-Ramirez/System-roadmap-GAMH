@@ -47,3 +47,6 @@ app/instance/uploads
 
 # Visual studio code
 .vscode
+
+# Base de datos .db
+app/instance/database.db
