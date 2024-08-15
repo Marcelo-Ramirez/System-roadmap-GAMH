@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import './tailwind.css';
-import './components/login/Login.css';
+import './assets/styles/tailwind.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

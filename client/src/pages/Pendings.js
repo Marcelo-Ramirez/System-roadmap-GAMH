@@ -19,7 +19,7 @@ const tasks = [
     { title: "Finalize event budget", status: "On Hold", priority: "Medium", dueDate: "Jul 17" },
 ];
 
-const TaskList = () => {
+const Pendings = () => {
     return (
         <div className="h-full">
             <div className="bg-white rounded shadow">
@@ -51,4 +51,4 @@ const TaskList = () => {
     );
 };
 
-export default TaskList;
+export default Pendings;

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Worker, Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
-import Table from './Table';
+import Table from '../components/Table';
 
-const Process = () => {
+const Processes = () => {
     const [file, setFile] = useState(null);
     const [filePreview, setFilePreview] = useState(null);
     const [message, setMessage] = useState('');
@@ -163,4 +163,4 @@ const Process = () => {
     );
 };
 
-export default Process;
+export default Processes;

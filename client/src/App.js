@@ -1,28 +1,29 @@
-import React, { useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, AuthContext } from './context/AuthContext';
-import PrivateRoute from './PrivateRoute';
-import Login from './components/login/Login';
-import Home from './components/home/Home';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Layout from './Layout';
+import Home from './pages/Home';
+import Pendings from './pages/Pendings';
+import Processes from './pages/Processes';
+import Folders from './pages/Folders';
+import PrivateRoute from './components/PrivateRoute';
+import RouteCapture from './components/RouteCapture';
+import LoginWrapper from './components/LoginWrapper';
+import Login from './pages/Login';
 
-const App = () => {
+function App() {
     return (
-        <AuthProvider>
-            <Router>
-                <Routes>
-                    <Route path="/" element={<Navigate to="/home" />} />
-                    <Route path="/login" element={<LoginWrapper />} />
-                    <Route path="/home" element={<PrivateRoute element={<Home />} />} />
-                    <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-            </Router>
-        </AuthProvider>
+        <Router>
+            <Routes>
+                <Route path="/" element={<PrivateRoute element={<Layout />} />} >
+                    <Route path="inicio" element={<Home />} />
+                    <Route path="pendientes" element={<Pendings />} />
+                    <Route path="procesos" element={<Processes />} />
+                    <Route path="carpetas" element={<Folders />} />
+                </Route>
+                <Route path="/login" element={<LoginWrapper element={<Login />} />} />
+                <Route path="*" element={<RouteCapture />} />
+            </Routes>
+        </Router>
     );
 }
-
-const LoginWrapper = () => {
-    const { token } = useContext(AuthContext);
-    return token ? <Navigate to="/home" /> : <Login />;
-};
 
 export default App;

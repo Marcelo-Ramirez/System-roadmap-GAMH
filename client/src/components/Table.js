@@ -1,5 +1,5 @@
 import React from "react";
-import logo_Table from './assets/logo-table.png';
+import logo_Table from '../assets/images/logo-table.png';
 
 const Table = () => {
     return (

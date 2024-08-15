@@ -1,9 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
-import './Login.css';
-import background from './background.jpg';
-import { queryLogin, queryRegister } from './api';
+import '../assets/styles/Login.css';
+import background from '../assets/images/background.jpg';
+import { queryLogin, queryRegister } from '../services/api';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -11,7 +10,6 @@ const Login = () => {
     const [area, setArea] = useState('');
     const [isRegistering, setIsRegistering] = useState(false);
     const navigate = useNavigate();
-    const { login } = useContext(AuthContext);
 
     const areas = [
         "MAE",
@@ -44,7 +42,6 @@ const Login = () => {
                 alert(response.message);
             } else if (response.token) {
                 document.cookie = `token=${response.token}; path=/`; // Guardar el token en una cookie
-                login(response.token);
                 alert('Login exitoso');
                 navigate('/home');
             }
