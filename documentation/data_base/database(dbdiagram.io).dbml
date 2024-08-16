@@ -1,0 +1,32 @@
+Table Proceso {
+  ProcesoID int [pk, increment] // Llave primaria y autoincremental
+  Nombre varchar(255)
+  Miembros int
+}
+
+Table Carpeta {
+  CarpetaID int [pk, increment] // Llave primaria y autoincremental
+  Nombre varchar(255)
+  ProcesoID int [ref: > Proceso.ProcesoID] // Llave foránea referenciando a Proceso
+}
+
+Table Documento {
+  DocumentoID int [pk, increment] // Llave primaria y autoincremental
+  Nombre varchar(255)
+  URL varchar(255)
+  CarpetaID int [ref: > Carpeta.CarpetaID] // Llave foránea referenciando a Carpeta
+  UsuarioID int [ref: > Usuario.UsuarioID] // Llave foránea referenciando a Usuario
+}
+
+Table Usuario {
+  UsuarioID int [pk, increment] // Llave primaria y autoincremental
+  Nombre varchar(255)
+  Area varchar(255)
+  Contraseña varchar(255)
+}
+
+Table Usuario_Proceso {
+  UsuarioID int [ref: > Usuario.UsuarioID] // Llave foránea referenciando a Usuario
+  ProcesoID int [ref: > Proceso.ProcesoID] // Llave foránea referenciando a Proceso
+  Note: 'Tabla intermedia para manejar la relación N:M entre Usuario y Proceso'
+}
